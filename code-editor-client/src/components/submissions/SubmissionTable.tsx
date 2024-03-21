@@ -29,8 +29,12 @@ const SubmissionTable = () => {
     fetchSubmission();
   }, []);
 
+  if (isLoading) {
+    return <div className="pt-20 text-xl">Loading...</div>;
+  }
+
   return (
-    <div className="relative  overflow-x-auto">
+    <div className="relative pt-20  overflow-x-auto">
       <table className="w-full text-sm text-left  text-gray-500 ">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
@@ -51,7 +55,6 @@ const SubmissionTable = () => {
             </th>
           </tr>
         </thead>
-        {isLoading && <div>Loading...</div>}
         <tbody>
           {submissions.map((submission, index) => {
             return (

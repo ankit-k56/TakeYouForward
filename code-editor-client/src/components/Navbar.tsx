@@ -10,7 +10,7 @@ const Navbar = () => {
   const [isVisible, setIsVisible] = useState(false);
   const pathname = usePathname();
   return (
-    <nav className=" bg-gray-900  w-full z-20   border-b  border-gray-600">
+    <nav className=" bg-gray-900  w-full z-20  fixed left-0 top-0  border-b  border-gray-600">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">
           TakeUForward

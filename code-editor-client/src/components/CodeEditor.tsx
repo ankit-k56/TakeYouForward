@@ -4,7 +4,6 @@ import Button from "./ui/Button";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 import { submit } from "../../types/submit";
-import LanguageSelector from "./LanguageSelector";
 const CodeEditor = () => {
   const {
     register,
@@ -34,7 +33,6 @@ const CodeEditor = () => {
       const jsonResponse = await response.json();
       console.log(jsonResponse);
 
-      // await new Promise((resolve) => setTimeout(resolve, 2000));
       toast.success("Code submitted successfully");
     } catch (err) {
       console.error(err);
@@ -44,7 +42,7 @@ const CodeEditor = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className=" max-w-screen-xl h-[90vh]  text-left  mt-5"
+      className=" max-w-screen-xl h-[90vh] pt-16  text-left  mt-5"
     >
       <div className="flex flex-col gap-2">
         <div className="flex justify-between max-w-[1000px] md:w-[60vw]">
