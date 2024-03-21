@@ -47,8 +47,8 @@ const CodeEditor = () => {
       className=" max-w-screen-xl h-[90vh]  text-left  mt-5"
     >
       <div className="flex flex-col gap-2">
-        <div className="flex justify-between max-w-[1000px] w-[60vw]">
-          <div>
+        <div className="flex justify-between max-w-[1000px] md:w-[60vw]">
+          <div className="relative">
             <label
               htmlFor="user_name"
               className="block mb-1 text-sm font-medium text-gray-900"
@@ -60,16 +60,23 @@ const CodeEditor = () => {
               id="user_name"
               {...register("username", {
                 required: "User Name is required",
-                minLength: { value: 3, message: "Username is too short" },
+                minLength: {
+                  value: 3,
+                  message: "Username should be atleast of 3 characters",
+                },
                 validate: (value) => {
                   if (value.trim() == "") return "Username can't be empty";
                 },
               })}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-tuf focus:border-tuf block w-full p-2.5  "
+              className={`bg-gray-50 border  border-gray-300 text-gray-900 text-sm ${
+                errors.username && "border-red-500"
+              } rounded-lg focus:ring-tuf focus:border-tuf block w-full p-2.5  `}
               placeholder="Ennter your user name"
             />
             {errors.username && (
-              <div className="text-red-500">{errors.username.message}</div>
+              <div className="text-red-500  text-xs">
+                {errors.username.message}
+              </div>
             )}
           </div>
           <div>
@@ -97,7 +104,7 @@ const CodeEditor = () => {
         </div>
 
         <div className=" flex flex-col md:flex-row gap-5">
-          <div>
+          <div className="relative">
             <textarea
               id="code"
               {...register("code", {
@@ -107,18 +114,21 @@ const CodeEditor = () => {
                   if (value.trim() == "") return "Code can't be empty";
                 },
               })}
-              className="block p-2.5 max-w-[1000px] w-[90vw] md:w-[60vw] h-[75vh] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-tuf focus:border-tuf    "
+              className={`block p-2.5 max-w-[1000px] w-[90vw] md:w-[60vw] h-[75vh] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-tuf focus:border-tuf  ${
+                errors.code && "border-red-500"
+              }`}
               placeholder="Write your code here..."
             ></textarea>
             {errors.code && (
-              <div className="text-red-500">{errors.code.message}</div>
+              <div className="text-red-500 absolute text-xs">
+                {errors.code.message}
+              </div>
             )}
           </div>
           <div className="flex flex-row md:flex-col gap-2 items-end md:items-start  justify-between ">
             <textarea
               id="stdin"
               rows={10}
-              // cols={30}
               className="block p-2.5 max-w-[300px] w-[50vw] md:w-[15vw]  text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-tuf focus:border-tuf    "
               placeholder="Enter the input here..."
             ></textarea>
