@@ -11,6 +11,11 @@ const redis = new Redis(process.env.REDIS_URL);
 const submit = async (req, res) => {
   try {
     const { username, languageCode, code, stdin } = req.body;
+    if (!username || !languageCode || !code || !stdin) {
+      return res
+        .status(400)
+        .json({ message: "Please provide all the required fields" });
+    }
 
     const b64code = buffer.from(code).toString("base64");
     const b64stdin = buffer.from(stdin).toString("base64");

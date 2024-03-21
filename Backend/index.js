@@ -12,21 +12,17 @@ app.get("/submissions", getSubmissions);
 app.post("/submit", submit);
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.send("TakeUForward Task");
 });
 async function keepConnectionAlive() {
-  // Generate a random path to simulate a simple query
-  const randomPath = Math.floor(Math.random() * 1000); // Adjust for your needs
-
   try {
     const client = await pool.connect();
-    await client.query(`SELECT * FROM poolAlive`); // Replace with a harmless query
+    await client.query(`SELECT * FROM poolAlive`);
     client.release();
     console.log("Connection kept alive:", new Date());
   } catch (error) {
     console.error("Error keeping connection alive:", error);
   } finally {
-    // Schedule the next keep-alive ping after 1.5 minutes (90 seconds)
     setTimeout(keepConnectionAlive, 90000);
   }
 }
