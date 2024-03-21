@@ -18,13 +18,16 @@ const CodeEditor = () => {
   });
   const onSubmit: SubmitHandler<submit> = async (data) => {
     try {
-      const response = await fetch("http://localhost:3000/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `https://take-you-forward.vercel.app/submit`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to submit the code");
       }
@@ -44,8 +47,6 @@ const CodeEditor = () => {
       className=" max-w-screen-xl h-[90vh]  text-left  mt-5"
     >
       <div className="flex flex-col gap-2">
-        {/* <LanguageSelector /> */}
-
         <div className="flex justify-between max-w-[1000px] w-[60vw]">
           <div>
             <label
@@ -84,9 +85,10 @@ const CodeEditor = () => {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-tuf focus:border-tuf block w-full p-2.5  "
             >
               <option value={52}>C++</option>
-              <option value={69}>Java</option>
-              <option value={89}>Python</option>
-              <option value={90}>JavaScript</option>
+              <option value={91}>Java</option>
+              <option value={71}>Python</option>
+              <option value={93}>JavaScript</option>
+              <option value={95}>Go</option>
             </select>
             {errors.languageCode && (
               <div className="text-red-500">{errors.languageCode.message}</div>

@@ -2,32 +2,32 @@
 import React, { useEffect, useState } from "react";
 import TableRow from "./TableRow";
 import { Submission } from "../../../types/submit";
-import { stdout } from "process";
+import { toast } from "sonner";
 
 const SubmissionTable = () => {
   const [submissions, getSubmissions] = useState<Submission[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     const fetchSubmission = async () => {
       try {
-        const response = await fetch("http://localhost:3000/submissions");
+        setLoading(true);
+        const response = await fetch(
+          "https://take-you-forward.vercel.app/submissions"
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
         const jsonResponse = await response.json();
         getSubmissions(jsonResponse.submissions);
-        // console.log(jsonResponse);
+        setLoading(false);
       } catch (err) {
+        setLoading(false);
+        toast.error("Internal server error");
         console.error(err);
       }
     };
     fetchSubmission();
   }, []);
-
-  // const submissions: any = await fetch("http://localhost:3000/submissions")
-  //   .then((res) => res.json())
-  //   .catch((err) => console.error(err));
-
-  // console.log(submissions);
 
   return (
     <div className="relative  overflow-x-auto">
@@ -51,6 +51,7 @@ const SubmissionTable = () => {
             </th>
           </tr>
         </thead>
+        {isLoading && <div>Loading...</div>}
         <tbody>
           {submissions.map((submission, index) => {
             return (
@@ -64,19 +65,6 @@ const SubmissionTable = () => {
               />
             );
           })}
-          {/* <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow /> */}
         </tbody>
       </table>
     </div>
