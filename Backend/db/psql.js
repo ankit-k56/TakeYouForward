@@ -12,6 +12,7 @@ const pool = new Pool({
     rejectUnauthorized: true,
     sslmode: "require",
   },
+  poolKeepAlive: 30000,
   idleTimeoutMillis: 0,
 });
 

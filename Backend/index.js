@@ -14,18 +14,24 @@ app.post("/submit", submit);
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
-app.listen(3000, async () => {
-  // await pool.connect((err, client, release) => {
-  //   if (err) {
-  //     console.error("Error connecting to PostgreSQL:", err.stack);
-  //     return;
-  //   }
-  //   console.log("Connected to PostgreSQL");
-  // });
+async function keepConnectionAlive() {
+  // Generate a random path to simulate a simple query
+  const randomPath = Math.floor(Math.random() * 1000); // Adjust for your needs
 
-  // await pool.on("error", (err, client) => {
-  //   console.error("Unexpected error on idle client", err);
-  //   process.exit(-1);
-  // });
+  try {
+    const client = await pool.connect();
+    await client.query(`SELECT * FROM poolAlive`); // Replace with a harmless query
+    client.release();
+    console.log("Connection kept alive:", new Date());
+  } catch (error) {
+    console.error("Error keeping connection alive:", error);
+  } finally {
+    // Schedule the next keep-alive ping after 1.5 minutes (90 seconds)
+    setTimeout(keepConnectionAlive, 90000);
+  }
+}
+
+app.listen(3000, async () => {
+  keepConnectionAlive();
   console.log("Server is running on port 3000");
 });

@@ -41,7 +41,7 @@ const CodeEditor = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex max-w-screen-xl h-[90vh]  text-left  mt-5"
+      className=" max-w-screen-xl h-[90vh]  text-left  mt-5"
     >
       <div className="flex flex-col gap-2">
         {/* <LanguageSelector /> */}
@@ -64,7 +64,7 @@ const CodeEditor = () => {
                   if (value.trim() == "") return "Username can't be empty";
                 },
               })}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-tuf focus:border-tuf block w-full p-2.5  "
               placeholder="Ennter your user name"
             />
             {errors.username && (
@@ -81,7 +81,7 @@ const CodeEditor = () => {
             <select
               {...register("languageCode")}
               id="countries"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-tuf focus:border-tuf block w-full p-2.5  "
             >
               <option value={52}>C++</option>
               <option value={69}>Java</option>
@@ -94,7 +94,7 @@ const CodeEditor = () => {
           </div>
         </div>
 
-        <div className=" flex gap-5">
+        <div className=" flex flex-col md:flex-row gap-5">
           <div>
             <textarea
               id="code"
@@ -105,19 +105,19 @@ const CodeEditor = () => {
                   if (value.trim() == "") return "Code can't be empty";
                 },
               })}
-              className="block p-2.5 max-w-[1000px] w-[60vw] h-[75vh] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500    "
+              className="block p-2.5 max-w-[1000px] w-[90vw] md:w-[60vw] h-[75vh] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-tuf focus:border-tuf    "
               placeholder="Write your code here..."
             ></textarea>
             {errors.code && (
               <div className="text-red-500">{errors.code.message}</div>
             )}
           </div>
-          <div className="flex flex-col  justify-between ">
+          <div className="flex flex-row md:flex-col gap-2 items-end md:items-start  justify-between ">
             <textarea
               id="stdin"
               rows={10}
               // cols={30}
-              className="block p-2.5 max-w-[300px] w-[15vw]  text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500    "
+              className="block p-2.5 max-w-[300px] w-[50vw] md:w-[15vw]  text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-tuf focus:border-tuf    "
               placeholder="Enter the input here..."
             ></textarea>
             <Button isLoading={isSubmitting} info="Run" />
