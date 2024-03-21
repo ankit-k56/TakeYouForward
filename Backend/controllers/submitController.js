@@ -15,8 +15,6 @@ const submit = async (req, res) => {
     const b64code = buffer.from(code).toString("base64");
     const b64stdin = buffer.from(stdin).toString("base64");
 
-    console.log(b64code);
-
     const options = {
       method: "POST",
       url: "https://judge0-ce.p.rapidapi.com/submissions",
@@ -40,11 +38,14 @@ const submit = async (req, res) => {
     };
 
     const response = await axios.request(options);
-    console.log(response.data);
+    console.log(response.data.stdout);
+    const decodedOutput = Buffer.from(response.data.stdout, "base64").toString(
+      "utf8"
+    );
     const language = response.data.language.name;
     const newSubmission = await pool.query(
       `INSERT INTO submissions (id ,username, language, code, stdin, stdout) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
-      [uuidv4(), username, language, code, stdin, response.data.stdout]
+      [uuidv4(), username, language, code, stdin, decodedOutput]
     );
 
     redis.rpush(
@@ -54,7 +55,7 @@ const submit = async (req, res) => {
         language,
         code,
         stdin,
-        stdout: response.data.stdout,
+        stdout: decodedOutput,
       })
     );
 
@@ -85,6 +86,7 @@ const getSubmissions = async (req, res) => {
           language: JSON.parse(submission).language,
           code: scode,
           stdin: JSON.parse(submission).stdin,
+          stdout: JSON.parse(submission).stdout,
         };
       });
       res.status(200).json({ submissions: allSubmissions });
