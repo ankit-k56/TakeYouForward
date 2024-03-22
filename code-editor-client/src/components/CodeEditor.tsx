@@ -45,7 +45,7 @@ const CodeEditor = () => {
       className=" max-w-screen-xl h-[90vh] pt-16  text-left  mt-5"
     >
       <div className="flex flex-col gap-2">
-        <div className="flex justify-between max-w-[1000px] md:w-[60vw]">
+        <div className="flex justify-between gap-5 max-w-[1000px] md:w-[60vw]">
           <div className="relative">
             <label
               htmlFor="user_name"
@@ -69,7 +69,7 @@ const CodeEditor = () => {
               className={`bg-gray-50 border  border-gray-300 text-gray-900 text-sm ${
                 errors.username && "border-red-500"
               } rounded-lg focus:ring-tuf focus:border-tuf block w-full p-2.5  `}
-              placeholder="Ennter your user name"
+              placeholder="Enter your user name"
             />
             {errors.username && (
               <div className="text-red-500  text-xs">
