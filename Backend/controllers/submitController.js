@@ -11,11 +11,11 @@ const redis = new Redis(process.env.REDIS_URL);
 const submit = async (req, res) => {
   try {
     const { username, languageCode, code, stdin } = req.body;
-    if (!username || !languageCode || !code || !stdin) {
-      return res
-        .status(400)
-        .json({ message: "Please provide all the required fields" });
-    }
+    // if (!username || !languageCode || !code || !stdin) {
+    //   return res
+    //     .status(400)
+    //     .json({ message: "Please provide all the required fields" });
+    // }
 
     const b64code = buffer.from(code).toString("base64");
     const b64stdin = buffer.from(stdin).toString("base64");
@@ -44,9 +44,12 @@ const submit = async (req, res) => {
 
     const response = await axios.request(options);
     console.log(response.data.stdout);
-    const decodedOutput = Buffer.from(response.data.stdout, "base64").toString(
-      "utf8"
-    );
+    let decodedOutput = "";
+    if (response.data.stdout) {
+      decodedOutput = Buffer.from(response.data.stdout, "base64").toString(
+        "utf8"
+      );
+    }
     const language = response.data.language.name;
     const newSubmission = await pool.query(
       `INSERT INTO submissions (id ,username, language, code, stdin, stdout) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
